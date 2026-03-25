@@ -8,6 +8,8 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "donationmanager (==2.0.0)",
+    "gpiozero (>=2.0.1,<3.0.0)"
 ]
 
 [tool.poetry]
