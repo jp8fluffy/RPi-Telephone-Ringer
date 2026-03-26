@@ -1,7 +1,7 @@
 import gpiozero
 import json
 import concurrent.futures
-from time import sleep
+from time import time
 
 
 class Ring:
@@ -9,9 +9,6 @@ class Ring:
         self.number_of_donations = number_of_donations
         self.last_donation_index = self.number_of_donations - 1
         self.donations_json = donations_json
-
-        if self.number_of_donations > 0:
-            self.has_donation = True
 
         self.button_read_donation = gpiozero.Button(2)
         self.relay = gpiozero.OutputDevice(3)
@@ -27,8 +24,13 @@ class Ring:
 
     # ---- Public Methods ------
     def ring_if_donation(self, ring_duration_seconds: int):
+        start_time = time()
         while self.number_of_donations > 0:
-            button_pressed: bool = self._open_check_button_read_donation_thread()
+            current_time = time()
+            if current_time - start_time > ring_duration_seconds:
+                start_time = current_time
+                self.relay.toggle()
+
             if button_pressed:
                 print("relay off")
                 self.relay.off()
@@ -41,10 +43,6 @@ class Ring:
                 self.number_of_donations = self.number_of_donations - 1
 
                 return current_donation_json
-            self.relay.toggle()
-            print("toggled relay")
-            print("Sleeping")
-            sleep(ring_duration_seconds)
 
     # --- Private Methods ------
     def _open_check_button_read_donation_thread(self) -> bool:
