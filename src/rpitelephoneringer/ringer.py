@@ -11,27 +11,23 @@ class Ring:
         self.donations_json = donations_json
 
         self.button_read_donation = gpiozero.Button(2)
-        self.relay = gpiozero.OutputDevice(3)
-
-    @property
-    def last_donation_index(self):
-        """Getter for last_donation_index"""
-        return self._last_donation_index
-
-    @last_donation_index.setter
-    def last_donation_index(self, number_of_donations):
-        self._last_donation_index = number_of_donations - 1
+        self.relay = gpiozero.OutputDevice(26)
 
     # ---- Public Methods ------
     def ring_if_donation(self, ring_duration_seconds: int):
-        start_time = time()
-        while self.number_of_donations > 0:
-            current_time = time()
-            if current_time - start_time > ring_duration_seconds:
-                start_time = current_time
+        relay_start_time = time()
+        button_start_time = time()
+        while self.number_of_donations >= 0:
+            relay_current_time = time()
+            button_current_time = time()
+            relay_epoch = relay_current_time - relay_start_time
+            button_epoch = button_current_time - button_start_time
+
+            if relay_epoch >= ring_duration_seconds:
+                relay_start_time = relay_current_time
                 self.relay.toggle()
 
-            if button_pressed:
+            if self.button_read_donation.is_pressed and button_epoch >= 1:
                 print("relay off")
                 self.relay.off()
 
