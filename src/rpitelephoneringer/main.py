@@ -1,5 +1,5 @@
-from rpitelephoneringer.DonoTracker import DonationTracker
-from rpitelephoneringer.Telephone import Telephone
+from DonoTracker import DonationTracker
+from Telephone import Telephone
 from time import time
 
 url = "https://www.extra-life.org/api/1.6/participants/minismeef/donations"
