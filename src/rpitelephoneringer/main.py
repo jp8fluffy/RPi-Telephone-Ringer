@@ -9,6 +9,7 @@ donation_data = [0, "{}"]
 
 
 if __name__ == "__main__":
+    donation_data = tracker.get_new_donations()
     while True:
         current_time = time()
         time_epoch = current_time - start_time
