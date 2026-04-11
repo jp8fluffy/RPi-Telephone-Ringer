@@ -1,6 +1,7 @@
 import json
 import gpiozero
 from time import time
+from gpiozero.exc import GPIOPinInUse
 import pyttsx4
 
 
@@ -19,7 +20,6 @@ class Telephone:
         button_start_time = time()
 
         while self.number_of_donations > 0:
-            print(self.button.value)
             relay_current_time = time()
             relay_epoch = relay_current_time - relay_start_time
 
