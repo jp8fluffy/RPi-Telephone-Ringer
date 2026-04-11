@@ -28,7 +28,10 @@ class Telephone:
 
             if relay_epoch >= 2:
                 relay_start_time = relay_current_time
-                self.relay.toggle()
+                try:
+                    self.relay.toggle()
+                except GPIOPinInUse:
+                    print('tried toggling but failed')
 
             if self.button.value == 1 and button_epoch >= 2:
                 button_start_time = time()
