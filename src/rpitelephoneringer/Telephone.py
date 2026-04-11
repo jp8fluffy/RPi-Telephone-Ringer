@@ -18,7 +18,7 @@ class Telephone:
         relay_start_time = time()
         button_start_time = time()
 
-        while len(self.donations_json) > 0:
+        while self.number_of_donations > 0:
             relay_current_time = time()
             relay_epoch = relay_current_time - relay_start_time
 
@@ -49,7 +49,8 @@ class Telephone:
                     print("occured when trying to read donation")
 
     def return_and_remove_last_donation(self):
-        if len(self.donations_json) > 0:
-            last_donation = self.number_of_donations[-1]
-            self.number_of_donations = self.number_of_donations[:-1]
+        if self.number_of_donations > 0:
+            last_donation = self.donations_json[-1]
+            self.donations_json = self.donations_json[:-1]
+            self.number_of_donations -= 1
             return last_donation
