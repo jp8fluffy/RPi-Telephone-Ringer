@@ -44,7 +44,7 @@ class DonationTracker:
             try:
                 donation_data = self._load_json_file()
                 return donation_data[donation_index]
-            except IndexError, TypeError:
+            except (IndexError, TypeError):
                 pass
 
         print(
