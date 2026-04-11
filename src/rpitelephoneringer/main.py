@@ -13,6 +13,7 @@ if __name__ == "__main__":
         time_epoch = current_time - start_time
 
         if time_epoch >= 15:
+            start_time = time()
             donation_data = tracker.get_new_donations()
 
         if donation_data[0] > 0:
