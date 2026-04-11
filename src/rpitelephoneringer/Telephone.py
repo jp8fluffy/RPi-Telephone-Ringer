@@ -19,6 +19,7 @@ class Telephone:
         button_start_time = time()
 
         while self.number_of_donations > 0:
+            print(self.button.value)
             relay_current_time = time()
             relay_epoch = relay_current_time - relay_start_time
 
@@ -45,7 +46,7 @@ class Telephone:
                         f"{donation_name} donated {donation_amount} dollars and said..... {donation_message}"
                     )
                     self.tts.runAndWait()
-                except (IndexError, TypeError):
+                except IndexError, TypeError:
                     print("occured when trying to read donation")
 
     def return_and_remove_last_donation(self):
