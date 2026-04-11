@@ -51,7 +51,7 @@ class Telephone:
 
     def return_and_remove_last_donation(self):
         if self.number_of_donations > 0:
-            last_donation = self.donations_json[-1]
+            last_donation = self.donations_json[-1][1]
             self.donations_json = self.donations_json[:-1]
             self.number_of_donations -= 1
             return last_donation

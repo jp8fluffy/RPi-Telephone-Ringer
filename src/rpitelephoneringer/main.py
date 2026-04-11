@@ -5,8 +5,6 @@ from time import time
 url = "https://www.extra-life.org/api/1.6/participants/minismeef/donations"
 tracker = DonationTracker(url)
 start_time = time()
-donation_data = [0, "{}"]
-
 
 if __name__ == "__main__":
     donation_data = tracker.get_new_donations()
