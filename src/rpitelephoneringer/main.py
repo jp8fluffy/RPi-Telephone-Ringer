@@ -19,3 +19,4 @@ if __name__ == "__main__":
         if donation_data[0] > 0:
             telephone = Telephone(donation_data)
             telephone.ring_if_donation()
+            del(telephone)

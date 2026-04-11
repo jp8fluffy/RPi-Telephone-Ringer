@@ -31,13 +31,13 @@ class Telephone:
                 try:
                     self.relay.toggle()
                 except GPIOPinInUse:
-                    print('tried toggling but failed')
+                    print("tried toggling but failed")
 
             if self.button.value == 1 and button_epoch >= 2:
                 button_start_time = time()
                 try:
                     donation_to_read_json = self.return_and_remove_last_donation()
-                    
+
                     donation_name = str(donation_to_read_json["displayName"])
                     donation_amount = str(donation_to_read_json["amount"])
                     if "message" in donation_to_read_json:
@@ -50,6 +50,8 @@ class Telephone:
                     self.tts.runAndWait()
                 except (IndexError, TypeError):
                     print("occured when trying to read donation")
+        self.button.close()
+        self.relay.close()
 
     def return_and_remove_last_donation(self):
         if self.number_of_donations > 0:
