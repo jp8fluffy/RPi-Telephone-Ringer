@@ -33,9 +33,8 @@ class Telephone:
             if self.button.value == 1 and button_epoch >= 2:
                 button_start_time = time()
                 try:
-                    donation_to_read_json = json.loads(
-                        self.return_and_remove_last_donation()
-                    )
+                    donation_to_read_json = self.return_and_remove_last_donation()
+                    
                     donation_name = str(donation_to_read_json["displayName"])
                     donation_amount = str(donation_to_read_json["amount"])
                     if "message" in donation_to_read_json:
