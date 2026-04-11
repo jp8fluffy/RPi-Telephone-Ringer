@@ -21,35 +21,44 @@ class Telephone:
 
         while self.number_of_donations > 0:
             relay_current_time = time()
-            relay_epoch = relay_current_time - relay_start_time
+            relay_delta = relay_current_time - relay_start_time
 
             button_current_time = time()
-            button_epoch = button_current_time - button_start_time
+            button_delta = button_current_time - button_start_time
 
-            if relay_epoch >= 2:
+            if relay_delta >= 2:
                 relay_start_time = relay_current_time
                 try:
                     self.relay.toggle()
                 except GPIOPinInUse:
                     print("tried toggling but failed")
 
-            if self.button.value == 1 and button_epoch >= 2:
+            if self.button.value == 1 and button_delta >= 2:
                 button_start_time = time()
-                try:
-                    donation_to_read_json = self.return_and_remove_last_donation()
-
-                    donation_name = str(donation_to_read_json["displayName"])
-                    donation_amount = str(donation_to_read_json["amount"])
-                    if "message" in donation_to_read_json:
-                        donation_message = str(donation_to_read_json["message"])
-                    else:
-                        donation_message = ""
-                    self.tts.say(
-                        f"{donation_name} donated {donation_amount} dollars and said..... {donation_message}"
+                button_held_start_time = time()
+                while self.button.value == 1:
+                    button_held_current_time = time()
+                    button_held_delta = (
+                        button_held_current_time - button_held_start_time
                     )
-                    self.tts.runAndWait()
-                except (IndexError, TypeError):
-                    print("occured when trying to read donation")
+                    if button_held_delta >= 2:
+                        try:
+                            donation_to_read_json = (
+                                self.return_and_remove_last_donation()
+                            )
+
+                            donation_name = str(donation_to_read_json["displayName"])
+                            donation_amount = str(donation_to_read_json["amount"])
+                            if "message" in donation_to_read_json:
+                                donation_message = str(donation_to_read_json["message"])
+                            else:
+                                donation_message = ""
+                            self.tts.say(
+                                f"{donation_name} donated {donation_amount} dollars and said..... {donation_message}"
+                            )
+                            self.tts.runAndWait()
+                        except (IndexError, TypeError):
+                            print("occured when trying to read donation")
         self.button.close()
         self.relay.close()
 
