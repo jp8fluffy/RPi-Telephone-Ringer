@@ -29,7 +29,7 @@ class Telephone:
                 relay_start_time = relay_current_time
                 self.relay.toggle()
 
-            if self.button.value == 1 and button_epoch >= 1:
+            if self.button.value == 1 and button_epoch >= 2:
                 button_start_time = time()
                 try:
                     donation_to_read_json = json.loads(
