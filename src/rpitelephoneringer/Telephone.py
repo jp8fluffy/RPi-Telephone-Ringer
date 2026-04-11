@@ -45,7 +45,7 @@ class Telephone:
                         f"{donation_name} donated {donation_amount} dollars and said..... {donation_message}"
                     )
                     self.tts.runAndWait()
-                except IndexError:
+                except (IndexError, TypeError):
                     print("occured when trying to read donation")
 
     def return_and_remove_last_donation(self):
