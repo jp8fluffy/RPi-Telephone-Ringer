@@ -11,7 +11,7 @@ class Telephone:
         self.tts = pyttsx4.init()
 
         self.relay = gpiozero.OutputDevice(pin=26)
-        self.button = gpiozero.DigitalInputDevice(pin=2)
+        self.button = gpiozero.InputDevice(pin=17)
 
     def ring_if_donation(self):
 
