@@ -46,8 +46,11 @@ class Telephone:
                             donation_to_read_json = (
                                 self.return_and_remove_last_donation()
                             )
+                            if "displayName" in donation_to_read_json:
+                                donation_name = str(donation_to_read_json["displayName"])
+                            else:
+                                donation_name = 'Anonymous'
 
-                            donation_name = str(donation_to_read_json["displayName"])
                             donation_amount = str(donation_to_read_json["amount"])
                             if "message" in donation_to_read_json:
                                 donation_message = str(donation_to_read_json["message"])
